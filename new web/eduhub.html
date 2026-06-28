@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="EduHub – Complete Learning Platform for BCA & B.Sc Students. Notes, videos, previous papers, and more."/>
+<title>EduHub – Learn Smarter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --navy: #0B1426;
+  --navy2: #111E38;
+  --card: #1A2A44;
+  --card2: #1E3050;
+  --indigo: #4F46E5;
+  --indigo2: #6366F1;
+  --cyan: #06B6D4;
+  --cyan2: #22D3EE;
+  --green: #10B981;
+  --amber: #F59E0B;
+  --rose: #F43F5E;
+  --purple: #8B5CF6;
+  --text: #F1F5F9;
+  --text2: #94A3B8;
+  --text3: #64748B;
+  --border: rgba(99,102,241,0.2);
+  --glass: rgba(26,42,68,0.7);
+  --glass2: rgba(15,23,42,0.6);
+  --shadow: 0 25px 50px rgba(0,0,0,0.5);
+  --glow: 0 0 30px rgba(79,70,229,0.4);
+  --glow-cyan: 0 0 30px rgba(6,182,212,0.4);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="light"] {
+  --navy: #F0F4FF;
+  --navy2: #E8EEFF;
+  --card: #FFFFFF;
+  --card2: #F8FAFF;
+  --text: #1E293B;
+  --text2: #475569;
+  --text3: #94A3B8;
+  --border: rgba(79,70,229,0.2);
+  --glass: rgba(255,255,255,0.85);
+  --glass2: rgba(240,244,255,0.9);
+  --shadow: 0 25px 50px rgba(79,70,229,0.12);
+}
+
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--navy);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background 0.4s,color 0.4s;
+}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+input,textarea,select{font-family:inherit}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--navy2)}
+::-webkit-scrollbar-thumb{background:var(--indigo);border-radius:3px}
+
+/* ===== BACKGROUND ORBS ===== */
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;animation:floatOrb 12s ease-in-out infinite}
+.orb-1{width:500px;height:500px;background:var(--indigo);top:-100px;left:-100px;animation-delay:0s}
+.orb-2{width:400px;height:400px;background:var(--cyan);bottom:-100px;right:-100px;animation-delay:4s}
+.orb-3{width:300px;height:300px;background:var(--purple);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:8s}
+@keyframes floatOrb{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-40px) scale(1.05)}}
+[data-theme="light"] .orb{opacity:0.06}
+
+/* ===== LAYOUT ===== */
+#app{position:relative;z-index:1;min-height:100vh}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  position:sticky;top:0;z-index:1000;
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:var(--transition);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Poppins',sans-serif;font-weight:800;font-size:1.4rem;
+  cursor:pointer;
+}
+.logo-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:#fff;
+  box-shadow:var(--glow);
+}
+.logo-text span{color:var(--cyan)}
+.nav-search{
+  flex:1;max-width:400px;margin:0 24px;
+  position:relative;
+}
+.nav-search input{
+  width:100%;padding:10px 16px 10px 42px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:50px;color:var(--text);font-size:0.875rem;
+  transition:var(--transition);
+}
+.nav-search input:focus{outline:none;border-color:var(--indigo);box-shadow:var(--glow)}
+.nav-search .search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--text3);font-size:0.875rem;
+}
+.search-results{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  max-height:300px;overflow-y:auto;z-index:100;display:none;
+  box-shadow:var(--shadow);
+}
+.search-results.show{display:block}
+.search-result-item{
+  padding:10px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;
+  font-size:0.875rem;border-bottom:1px solid var(--border);transition:var(--transition);
+}
+.search-result-item:hover{background:var(--card2)}
+.search-result-item:last-child{border-bottom:none}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.btn-icon{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text2);font-size:0.9rem;transition:var(--transition);
+}
+.btn-icon:hover{color:var(--text);border-color:var(--indigo);box-shadow:var(--glow)}
+.btn-primary{
+  padding:9px 20px;border-radius:50px;
+  background:linear-gradient(135deg,var(--indigo),var(--indigo2));
+  color:#fff;font-size:0.875rem;font-weight:600;
+  transition:var(--transition);box-shadow:var(--glow);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 40px rgba(79,70,229,0.6)}
+.hamburger{display:none;flex-direction:column;gap:5px;width:24px;cursor:pointer}
+.hamburger span{height:2px;background:var(--text);border-radius:2px;transition:var(--transition)}
+
+/* ===== MOBILE NAV ===== */
+.mobile-menu{
+  display:none;position:fixed;top:68px;left:0;right:0;bottom:0;
+  background:var(--glass2);backdrop-filter:blur(20px);z-index:999;
+  padding:24px;flex-direction:column;gap:16px;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu .nav-search{max-width:100%;margin:0}
+.mobile-nav-links{display:flex;flex-direction:column;gap:8px}
+.mobile-nav-link{
+  padding:12px 16px;border-radius:var(--radius-sm);
+  background:var(--card);border:1px solid var(--border);
+  font-weight:500;transition:var(--transition);cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+}
+.mobile-nav-link:hover{border-color:var(--indigo);color:var(--indigo)}
+
+/* ===== PAGES ===== */
+.page{display:none;animation:fadeIn 0.4s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== HERO ===== */
+.hero{
+  padding:100px 24px 80px;text-align:center;
+  position:relative;overflow:hidden;
+  min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 16px;border-radius:50px;
+  background:rgba(79,70,229,0.15);border:1px solid rgba(79,70,229,0.3);
+  font-size:0.8rem;font-weight:600;color:var(--indigo2);
+  margin-bottom:24px;animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(79,70,229,0.3)}50%{box-shadow:0 0 0 8px rgba(79,70,229,0)}}
+.hero h1{
+  font-family:'Poppins',sans-serif;font-weight:800;
+  font-size:clamp(2.2rem,6vw,4.5rem);line-height:1.1;
+  margin-bottom:20px;letter-spacing:-1px;
+}
+.hero h1 .highlight{
+  background:linear-gradient(135deg,var(--indigo2),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero p{
+  font-size:clamp(1rem,2vw,1.2rem);color:var(--text2);
+  max-width:600px;margin:0 auto 48px;line-height:1.7;
+}
+.hero-stats{
+  display:flex;gap:40px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:48px;
+}
+.hero-stat{text-align:center}
+.hero-stat-num{
+  font-family:'Poppins',sans-serif;font-weight:800;font-size:2rem;
+  background:linear-gradient(135deg,var(--cyan),var(--indigo2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-stat-label{font-size:0.8rem;color:var(--text3);margin-top:2px}
+.degree-cards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;max-width:700px;width:100%;
+}
+.degree-card{
+  background:var(--glass);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:32px;cursor:pointer;transition:var(--transition);
+  position:relative;overflow:hidden;text-align:left;
+}
+.degree-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(79,70,229,0.1),rgba(6,182,212,0.05));
+  opacity:0;transition:var(--transition);
+}
+.degree-card:hover{transform:translateY(-6px);border-color:var(--indigo);box-shadow:var(--glow)}
+.degree-card:hover::before{opacity:1}
+.degree-icon{
+  width:56px;height:56px;border-radius:14px;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;color:#fff;margin-bottom:16px;
+  box-shadow:var(--glow);
+}
+.degree-card h3{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.4rem;margin-bottom:6px}
+.degree-card p{color:var(--text2);font-size:0.875rem;line-height:1.6;margin-bottom:16px}
+.degree-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  padding:3px 10px;border-radius:50px;font-size:0.72rem;font-weight:600;
+  background:rgba(79,70,229,0.15);color:var(--indigo2);border:1px solid rgba(79,70,229,0.2);
+}
+.tag.cyan{background:rgba(6,182,212,0.15);color:var(--cyan2);border-color:rgba(6,182,212,0.2)}
+.tag.green{background:rgba(16,185,129,0.15);color:var(--green);border-color:rgba(16,185,129,0.2)}
+
+/* ===== SECTION ===== */
+.section{padding:80px 24px;max-width:1200px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:48px}
+.section-eyebrow{
+  display:inline-block;font-size:0.78rem;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:10px;
+}
+.section-title{
+  font-family:'Poppins',sans-serif;font-weight:700;
+  font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.2;margin-bottom:12px;
+}
+.section-sub{color:var(--text2);font-size:1rem;max-width:500px;margin:0 auto}
+
+/* ===== YEAR SELECTION ===== */
+.back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 18px;border-radius:50px;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text2);font-size:0.875rem;font-weight:500;
+  margin:24px;cursor:pointer;transition:var(--transition);
+}
+.back-btn:hover{color:var(--text);border-color:var(--indigo)}
+.breadcrumb{
+  display:flex;align-items:center;gap:8px;padding:0 24px;
+  font-size:0.8rem;color:var(--text3);flex-wrap:wrap;
+}
+.breadcrumb-item{cursor:pointer;transition:var(--transition)}
+.breadcrumb-item:hover{color:var(--cyan)}
+.breadcrumb-item.active{color:var(--text);font-weight:600}
+.breadcrumb-sep{color:var(--text3)}
+
+/* ===== YEAR CARDS ===== */
+.year-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.year-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 20px;cursor:pointer;transition:var(--transition);text-align:center;
+  position:relative;overflow:hidden;
+}
+.year-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--indigo),var(--cyan));transform:scaleX(0);
+  transition:var(--transition);transform-origin:left;
+}
+.year-card:hover{transform:translateY(-4px);box-shadow:var(--glow)}
+.year-card:hover::after{transform:scaleX(1)}
+.year-num{
+  font-family:'Poppins',sans-serif;font-weight:800;font-size:2.5rem;
+  background:linear-gradient(135deg,var(--indigo2),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;margin-bottom:4px;
+}
+.year-label{font-weight:600;font-size:1rem;margin-bottom:4px}
+.year-sub{color:var(--text3);font-size:0.8rem}
+
+/* ===== SUBJECT GRID ===== */
+.subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.subject-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;cursor:pointer;transition:var(--transition);
+  display:flex;flex-direction:column;gap:12px;
+  position:relative;overflow:hidden;
+}
+.subject-card:hover{transform:translateY(-4px);border-color:var(--indigo);box-shadow:var(--glow)}
+.subject-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.subject-icon-wrap{
+  width:48px;height:48px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+}
+.subject-card h4{font-family:'Poppins',sans-serif;font-weight:600;font-size:0.95rem;line-height:1.4}
+.subject-card p{color:var(--text2);font-size:0.8rem;line-height:1.5}
+.subject-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:12px;border-top:1px solid var(--border);
+  font-size:0.78rem;color:var(--text3);
+}
+.resource-count{
+  display:flex;align-items:center;gap:4px;
+  color:var(--cyan);font-weight:600;
+}
+
+/* ===== SUBJECT DETAIL ===== */
+.subject-hero{
+  background:linear-gradient(135deg,var(--indigo) 0%,rgba(6,182,212,0.6) 100%);
+  padding:48px 24px;position:relative;overflow:hidden;
+}
+.subject-hero-content{max-width:1200px;margin:0 auto}
+.subject-hero h2{
+  font-family:'Poppins',sans-serif;font-weight:800;
+  font-size:clamp(1.8rem,4vw,3rem);margin-bottom:8px;
+}
+.subject-hero p{color:rgba(255,255,255,0.85);font-size:1rem;margin-bottom:20px}
+.resource-tabs{
+  display:flex;flex-wrap:wrap;gap:8px;padding:24px;
+  max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border);
+}
+.resource-tab{
+  padding:8px 18px;border-radius:50px;font-size:0.83rem;font-weight:600;
+  border:1px solid var(--border);color:var(--text2);transition:var(--transition);
+  cursor:pointer;background:transparent;
+}
+.resource-tab.active,.resource-tab:hover{
+  background:var(--indigo);color:#fff;border-color:var(--indigo);box-shadow:var(--glow);
+}
+.resource-content{padding:32px 24px;max-width:1200px;margin:0 auto}
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.resource-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:20px;transition:var(--transition);position:relative;
+  display:flex;flex-direction:column;gap:10px;
+}
+.resource-card:hover{border-color:var(--cyan);box-shadow:var(--glow-cyan)}
+.resource-card-header{display:flex;align-items:center;gap:10px}
+.resource-type-icon{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;
+}
+.resource-card h5{font-weight:600;font-size:0.9rem;line-height:1.4}
+.resource-card p{color:var(--text2);font-size:0.8rem;line-height:1.5}
+.resource-actions{display:flex;gap:8px;margin-top:4px}
+.btn-sm{
+  padding:6px 14px;border-radius:50px;font-size:0.78rem;font-weight:600;
+  transition:var(--transition);cursor:pointer;border:none;
+}
+.btn-download{background:var(--indigo);color:#fff}
+.btn-download:hover{background:var(--indigo2);transform:translateY(-1px)}
+.btn-preview{background:var(--card2);color:var(--text2);border:1px solid var(--border)}
+.btn-preview:hover{color:var(--text);border-color:var(--cyan)}
+.btn-bookmark{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--card2);border:1px solid var(--border);
+  color:var(--text3);font-size:0.85rem;transition:var(--transition);
+  cursor:pointer;
+}
+.btn-bookmark:hover,.btn-bookmark.active{color:var(--amber);border-color:var(--amber)}
+
+/* ===== VIDEO SECTION ===== */
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.video-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+  transition:var(--transition);cursor:pointer;
+}
+.video-card:hover{transform:translateY(-4px);box-shadow:var(--glow)}
+.video-thumb{
+  position:relative;aspect-ratio:16/9;background:var(--card2);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.video-thumb-img{width:100%;height:100%;object-fit:cover}
+.play-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,0.3);
+  display:flex;align-items:center;justify-content:center;transition:var(--transition);
+}
+.play-btn{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--indigo);transition:var(--transition);
+}
+.video-card:hover .play-btn{transform:scale(1.1)}
+.video-info{padding:16px}
+.video-info h5{font-weight:600;font-size:0.9rem;margin-bottom:4px;line-height:1.4}
+.video-info p{color:var(--text3);font-size:0.78rem}
+.video-meta{display:flex;align-items:center;gap:12px;margin-top:8px;font-size:0.75rem;color:var(--text3)}
+.video-embed-modal{
+  position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.9);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.video-embed-modal.open{display:flex}
+.video-embed-wrap{
+  position:relative;width:100%;max-width:900px;border-radius:var(--radius);overflow:hidden;
+  background:#000;aspect-ratio:16/9;
+}
+.video-embed-wrap iframe{width:100%;height:100%;border:none}
+.modal-close{
+  position:absolute;top:-44px;right:0;
+  background:rgba(255,255,255,0.1);border:none;color:#fff;
+  width:36px;height:36px;border-radius:50%;font-size:1.1rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);
+}
+.modal-close:hover{background:var(--rose)}
+
+/* ===== FEATURES / HOME SECTIONS ===== */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.feature-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 20px;transition:var(--transition);
+}
+.feature-card:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.feature-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  margin-bottom:16px;
+}
+.feature-card h4{font-family:'Poppins',sans-serif;font-weight:600;font-size:1rem;margin-bottom:6px}
+.feature-card p{color:var(--text2);font-size:0.82rem;line-height:1.6}
+
+/* ===== DASHBOARD ===== */
+.dashboard-layout{display:grid;grid-template-columns:240px 1fr;gap:24px;padding:24px;max-width:1200px;margin:0 auto}
+.sidebar{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;height:fit-content;position:sticky;top:80px;
+}
+.sidebar-user{text-align:center;padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.avatar{
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;color:#fff;margin:0 auto 12px;
+  box-shadow:var(--glow);
+}
+.sidebar-user h4{font-weight:600;margin-bottom:2px}
+.sidebar-user p{color:var(--text3);font-size:0.8rem}
+.sidebar-nav{display:flex;flex-direction:column;gap:4px}
+.sidebar-link{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:var(--radius-sm);
+  font-size:0.875rem;color:var(--text2);cursor:pointer;transition:var(--transition);
+}
+.sidebar-link:hover,.sidebar-link.active{background:rgba(79,70,229,0.15);color:var(--indigo2)}
+.sidebar-link i{width:18px;text-align:center}
+.dash-section{margin-bottom:32px}
+.dash-section-title{
+  font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;
+  margin-bottom:16px;display:flex;align-items:center;gap:8px;
+}
+.progress-bar-wrap{margin-bottom:12px}
+.progress-bar-label{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.82rem;margin-bottom:6px;
+}
+.progress-bar-label span:last-child{color:var(--cyan);font-weight:600}
+.progress-bar{height:6px;background:var(--card2);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--indigo),var(--cyan));transition:width 1s ease}
+.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.recent-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:14px;cursor:pointer;transition:var(--transition);font-size:0.82rem;
+}
+.recent-card:hover{border-color:var(--indigo)}
+.recent-card strong{display:block;margin-bottom:4px}
+.recent-card span{color:var(--text3)}
+
+/* ===== AUTH MODAL ===== */
+.auth-modal{
+  position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.7);
+  display:none;align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(8px);
+}
+.auth-modal.open{display:flex}
+.auth-box{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:40px;width:100%;max-width:420px;position:relative;
+  box-shadow:var(--shadow);
+}
+.auth-box h2{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.6rem;margin-bottom:4px}
+.auth-box p{color:var(--text2);font-size:0.875rem;margin-bottom:28px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.82rem;font-weight:600;color:var(--text2);margin-bottom:6px}
+.form-group input{
+  width:100%;padding:11px 14px;
+  background:var(--navy2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:0.9rem;
+  transition:var(--transition);
+}
+.form-group input:focus{outline:none;border-color:var(--indigo);box-shadow:var(--glow)}
+.auth-switch{font-size:0.82rem;color:var(--text2);margin-top:16px;text-align:center}
+.auth-switch span{color:var(--cyan);cursor:pointer;font-weight:600}
+.auth-switch span:hover{text-decoration:underline}
+.modal-close-btn{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--card2);border:1px solid var(--border);
+  color:var(--text2);font-size:0.9rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);
+}
+.modal-close-btn:hover{color:var(--text);border-color:var(--rose)}
+
+/* ===== LANG TOGGLE ===== */
+.lang-badge{
+  padding:5px 12px;border-radius:50px;font-size:0.75rem;font-weight:700;
+  border:1px solid var(--border);cursor:pointer;transition:var(--transition);
+  display:flex;align-items:center;gap:6px;
+}
+.lang-badge:hover,.lang-badge.active{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+
+/* ===== TOAST ===== */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:5000;display:flex;flex-direction:column;gap:10px}
+.toast{
+  padding:12px 18px;border-radius:var(--radius-sm);
+  background:var(--card);border:1px solid var(--border);
+  font-size:0.875rem;font-weight:500;box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:10px;
+  animation:slideIn 0.3s ease,fadeOut 0.3s ease 2.7s forwards;
+  max-width:320px;
+}
+.toast.success{border-color:var(--green)}
+.toast.success i{color:var(--green)}
+.toast.error{border-color:var(--rose)}
+.toast.error i{color:var(--rose)}
+.toast.info{border-color:var(--cyan)}
+.toast.info i{color:var(--cyan)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:var(--navy2);border-top:1px solid var(--border);
+  padding:60px 24px 32px;margin-top:80px;
+}
+.footer-grid{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;
+}
+.footer-brand p{color:var(--text2);font-size:0.875rem;line-height:1.7;margin:12px 0 20px}
+.footer-socials{display:flex;gap:10px}
+.social-btn{
+  width:36px;height:36px;border-radius:50%;background:var(--card);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  color:var(--text2);font-size:0.875rem;transition:var(--transition);
+}
+.social-btn:hover{color:var(--indigo);border-color:var(--indigo)}
+.footer-col h5{font-family:'Poppins',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-link{
+  color:var(--text2);font-size:0.85rem;cursor:pointer;transition:var(--transition);
+}
+.footer-link:hover{color:var(--cyan)}
+.footer-bottom{
+  max-width:1200px;margin:0 auto;
+  border-top:1px solid var(--border);padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  font-size:0.8rem;color:var(--text3);
+}
+
+/* ===== TRENDING & ANNOUNCEMENT ===== */
+.announce-bar{
+  background:linear-gradient(90deg,rgba(79,70,229,0.2),rgba(6,182,212,0.2));
+  border-bottom:1px solid var(--border);
+  padding:8px 24px;display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:0.82rem;font-weight:500;
+}
+.announce-bar i{color:var(--amber);animation:pulse 2s infinite}
+
+/* ===== RATING ===== */
+.stars{display:flex;gap:2px}
+.star{color:var(--amber);font-size:0.85rem}
+.star.empty{color:var(--card2)}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  overflow:hidden;transition:var(--transition);
+}
+.faq-item.open{border-color:var(--indigo)}
+.faq-q{
+  padding:18px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  font-weight:600;font-size:0.9rem;
+}
+.faq-q i{transition:var(--transition);color:var(--text3)}
+.faq-item.open .faq-q i{transform:rotate(180deg);color:var(--indigo)}
+.faq-a{
+  padding:0 20px;max-height:0;overflow:hidden;transition:var(--transition);
+  color:var(--text2);font-size:0.875rem;line-height:1.7;
+}
+.faq-item.open .faq-a{padding:0 20px 18px;max-height:200px}
+
+/* ===== CONTACT ===== */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:900px;margin:0 auto}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.contact-form textarea{
+  width:100%;padding:11px 14px;
+  background:var(--navy2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:0.9rem;
+  resize:vertical;min-height:120px;transition:var(--transition);
+}
+.contact-form textarea:focus{outline:none;border-color:var(--indigo);box-shadow:var(--glow)}
+.contact-info-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px}
+.contact-info-icon{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  background:rgba(79,70,229,0.15);border:1px solid rgba(79,70,229,0.2);
+  display:flex;align-items:center;justify-content:center;color:var(--indigo2);
+}
+.contact-info-text strong{display:block;font-size:0.875rem;margin-bottom:2px}
+.contact-info-text span{color:var(--text2);font-size:0.82rem}
+
+/* ===== ABOUT ===== */
+.about-hero{
+  text-align:center;padding:80px 24px;
+  background:linear-gradient(135deg,rgba(79,70,229,0.15),rgba(6,182,212,0.1));
+}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;max-width:900px;margin:0 auto}
+.team-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;text-align:center;transition:var(--transition);
+}
+.team-card:hover{transform:translateY(-4px);border-color:var(--indigo)}
+.team-avatar{
+  width:64px;height:64px;border-radius:50%;margin:0 auto 12px;
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;
+}
+.team-card h4{font-weight:600;font-size:0.9rem;margin-bottom:2px}
+.team-card p{color:var(--text3);font-size:0.78rem}
+
+/* ===== NOTIFICATION ===== */
+.notif-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--rose);
+  position:absolute;top:6px;right:6px;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state{
+  text-align:center;padding:60px 24px;
+  color:var(--text2);
+}
+.empty-state i{font-size:3rem;color:var(--text3);margin-bottom:16px;display:block}
+.empty-state h3{font-family:'Poppins',sans-serif;font-weight:600;margin-bottom:8px}
+.empty-state p{font-size:0.875rem}
+
+/* ===== TRENDING ===== */
+.trending-list{display:flex;flex-direction:column;gap:10px}
+.trending-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;background:var(--card);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  cursor:pointer;transition:var(--transition);
+}
+.trending-item:hover{border-color:var(--indigo);transform:translateX(4px)}
+.trending-num{
+  font-family:'Poppins',sans-serif;font-weight:800;font-size:1.2rem;
+  color:var(--text3);min-width:28px;
+}
+.trending-num.hot{color:var(--rose)}
+.trending-info h5{font-weight:600;font-size:0.875rem}
+.trending-info p{color:var(--text3);font-size:0.78rem}
+.trending-arrow{color:var(--text3);margin-left:auto;font-size:0.85rem}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .dashboard-layout{grid-template-columns:1fr}
+  .sidebar{position:static;display:none}
+  .sidebar.show{display:block}
+}
+@media(max-width:768px){
+  .nav-search{display:none}
+  .hamburger{display:flex}
+  .hero{padding:60px 16px 40px}
+  .section{padding:48px 16px}
+  .footer-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .back-btn{margin:16px}
+  .resource-tabs{padding:16px}
+  .resource-content{padding:20px 16px}
+}
+@media(max-width:480px){
+  .hero-stats{gap:24px}
+  .degree-cards{grid-template-columns:1fr}
+  .year-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<!-- Background Orbs -->
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- Announcement Bar -->
+<div class="announce-bar">
+  <i class="fas fa-bullhorn"></i>
+  <span>🎉 New: B.Sc Physics & Chemistry notes added! Hindi medium resources now live. &nbsp;<strong style="color:var(--cyan);cursor:pointer" onclick="showToast('Exploring new content!','info')">Explore →</strong></span>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-logo" onclick="navigate('home')">
+    <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+    <div class="logo-text">Edu<span>Hub</span></div>
+  </div>
+  <div class="nav-search">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" id="navSearch" placeholder="Search subjects, notes, videos…" oninput="handleSearch(this.value)"/>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <div class="nav-actions">
+    <div class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-moon" id="themeIcon"></i></div>
+    <div class="btn-icon" style="position:relative" onclick="navigate('notifications')">
+      <i class="fas fa-bell"></i><div class="notif-dot"></div>
+    </div>
+    <div class="lang-badge" id="langToggle" onclick="toggleLang()"><i class="fas fa-globe"></i><span id="langLabel">EN</span></div>
+    <button class="btn-primary" onclick="openAuth('login')" id="authBtn">Sign In</button>
+    <div class="hamburger" onclick="toggleMobile()" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="nav-search" style="max-width:100%;margin:0">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" placeholder="Search…" oninput="handleSearch(this.value)" style="width:100%"/>
+  </div>
+  <div class="mobile-nav-links">
+    <div class="mobile-nav-link" onclick="navigate('home');toggleMobile()"><i class="fas fa-home"></i> Home</div>
+    <div class="mobile-nav-link" onclick="navigate('degree','BCA');toggleMobile()"><i class="fas fa-laptop-code"></i> BCA</div>
+    <div class="mobile-nav-link" onclick="navigate('degree','BSc');toggleMobile()"><i class="fas fa-flask"></i> B.Sc</div>
+    <div class="mobile-nav-link" onclick="navigate('dashboard');toggleMobile()"><i class="fas fa-tachometer-alt"></i> Dashboard</div>
+    <div class="mobile-nav-link" onclick="navigate('about');toggleMobile()"><i class="fas fa-info-circle"></i> About</div>
+    <div class="mobile-nav-link" onclick="navigate('contact');toggleMobile()"><i class="fas fa-envelope"></i> Contact</div>
+  </div>
+</div>
+
+<!-- App -->
+<div id="app">
+
+<!-- =================== HOME PAGE =================== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-badge"><i class="fas fa-star"></i> India's #1 Study Platform for BCA & B.Sc</div>
+    <h1>Learn Smarter.<br><span class="highlight">Study Everything</span><br>in One Place.</h1>
+    <p>Complete notes, video lectures, previous year papers, and resources for every subject — in English and Hindi. Free forever.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">50+</div><div class="hero-stat-label">Subjects</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">1000+</div><div class="hero-stat-label">Study Resources</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">500+</div><div class="hero-stat-label">Video Lectures</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">2</div><div class="hero-stat-label">Languages</div></div>
+    </div>
+    <div class="degree-cards">
+      <div class="degree-card" onclick="navigate('degree','BCA')">
+        <div class="degree-icon"><i class="fas fa-laptop-code"></i></div>
+        <h3>BCA</h3>
+        <p>Bachelor of Computer Applications — all 3 years, 6 semesters, complete resources for every subject.</p>
+        <div class="degree-tags">
+          <span class="tag">Programming</span>
+          <span class="tag cyan">Networking</span>
+          <span class="tag green">Databases</span>
+        </div>
+      </div>
+      <div class="degree-card" onclick="navigate('degree','BSc')">
+        <div class="degree-icon" style="background:linear-gradient(135deg,var(--cyan),var(--green))"><i class="fas fa-flask"></i></div>
+        <h3>B.Sc</h3>
+        <p>Bachelor of Science — all 3 years, Physics, Chemistry, Mathematics, Biology, and Computer Science.</p>
+        <div class="degree-tags">
+          <span class="tag cyan">Physics</span>
+          <span class="tag green">Chemistry</span>
+          <span class="tag">Mathematics</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Why EduHub?</div>
+      <h2 class="section-title">Everything You Need to <span style="color:var(--cyan)">Ace Your Exams</span></h2>
+      <p class="section-sub">Designed specifically for Indian university students, with resources in Hindi and English.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(79,70,229,0.15);color:var(--indigo2)"><i class="fas fa-file-pdf"></i></div>
+        <h4>Complete Notes & PDFs</h4>
+        <p>Unit-wise, chapter-wise, short notes, important questions, and revision notes for every subject.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(6,182,212,0.15);color:var(--cyan)"><i class="fab fa-youtube"></i></div>
+        <h4>Video Lectures</h4>
+        <p>Curated YouTube playlists, topic-wise videos, and beginner-to-advanced learning paths.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(16,185,129,0.15);color:var(--green)"><i class="fas fa-language"></i></div>
+        <h4>Hindi & English</h4>
+        <p>Switch between Hindi and English resources instantly. Study in the language you're comfortable in.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(245,158,11,0.15);color:var(--amber)"><i class="fas fa-history"></i></div>
+        <h4>Previous Year Papers</h4>
+        <p>Year-wise question papers with solutions, important question banks, and exam patterns.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(139,92,246,0.15);color:var(--purple)"><i class="fas fa-bookmark"></i></div>
+        <h4>Bookmarks & Progress</h4>
+        <p>Save your favourite notes, track your learning progress, and continue from where you left off.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(244,63,94,0.15);color:var(--rose)"><i class="fas fa-download"></i></div>
+        <h4>Download Offline</h4>
+        <p>Download PDFs and study offline anytime, anywhere. No internet required once downloaded.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(79,70,229,0.15);color:var(--indigo2)"><i class="fas fa-flask"></i></div>
+        <h4>Lab Practicals</h4>
+        <p>Complete practical notes, lab manuals, and assignment templates for science and CS subjects.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(6,182,212,0.15);color:var(--cyan)"><i class="fas fa-mobile-alt"></i></div>
+        <h4>Mobile Friendly</h4>
+        <p>Fully responsive design — study on your phone, tablet, or desktop with equal ease.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trending -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header">
+      <div class="section-eyebrow">🔥 Trending Now</div>
+      <h2 class="section-title">Most Popular This Week</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px">
+      <div class="trending-list" id="trendingList"></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px">
+        <h4 style="font-family:'Poppins',sans-serif;font-weight:700;margin-bottom:16px">Recently Added</h4>
+        <div id="recentList" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== DEGREE PAGE =================== -->
+<div class="page" id="page-degree">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:12px;padding:24px 24px 0;flex-wrap:wrap">
+      <button class="back-btn" style="margin:0" onclick="navigate('home')"><i class="fas fa-arrow-left"></i> Home</button>
+      <div class="breadcrumb" style="padding:0">
+        <span class="breadcrumb-item" onclick="navigate('home')">Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active" id="degreeBreadcrumb">BCA</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-eyebrow" id="degreeEyebrow">Select Year</div>
+        <h2 class="section-title" id="degreeTitle">BCA – Choose Your Year</h2>
+        <p class="section-sub" id="degreeSub">All 3 years, 6 semesters covered with complete resources.</p>
+      </div>
+      <div class="year-grid" id="yearGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SUBJECTS PAGE =================== -->
+<div class="page" id="page-subjects">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:12px;padding:24px 24px 0;flex-wrap:wrap">
+      <button class="back-btn" style="margin:0" id="subjectBackBtn" onclick="goBackToDegree()"><i class="fas fa-arrow-left"></i> Back</button>
+      <div class="breadcrumb" style="padding:0" id="subjectBreadcrumb"></div>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-eyebrow" id="subjectEyebrow">Year 1 – Semester 1 & 2</div>
+        <h2 class="section-title" id="subjectTitle">BCA First Year Subjects</h2>
+        <p class="section-sub">Click any subject to access all study materials, videos, and notes.</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px" id="semFilter"></div>
+      <div class="subject-grid" id="subjectGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SUBJECT DETAIL PAGE =================== -->
+<div class="page" id="page-subject-detail">
+  <div class="subject-hero" id="subjectHero">
+    <div class="subject-hero-content">
+      <button class="back-btn" style="margin:0 0 16px;background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff" id="detailBackBtn" onclick="goBackToSubjects()"><i class="fas fa-arrow-left"></i> Back to Subjects</button>
+      <div class="breadcrumb" id="detailBreadcrumb" style="padding:0;margin-bottom:12px;color:rgba(255,255,255,0.7)"></div>
+      <h2 id="detailSubjectName">Subject Name</h2>
+      <p id="detailSubjectDesc">Subject description goes here.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px" id="detailTags"></div>
+    </div>
+  </div>
+  <div class="resource-tabs" id="resourceTabs"></div>
+  <div class="resource-content" id="resourceContent"></div>
+</div>
+
+<!-- =================== DASHBOARD PAGE =================== -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard-layout">
+    <div class="sidebar" id="dashSidebar">
+      <div class="sidebar-user">
+        <div class="avatar"><i class="fas fa-user"></i></div>
+        <h4 id="dashUserName">Guest User</h4>
+        <p id="dashUserEmail">Sign in to save progress</p>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-link active" onclick="switchDashTab('overview')"><i class="fas fa-home"></i> Overview</div>
+        <div class="sidebar-link" onclick="switchDashTab('bookmarks')"><i class="fas fa-bookmark"></i> Bookmarks</div>
+        <div class="sidebar-link" onclick="switchDashTab('progress')"><i class="fas fa-chart-line"></i> Progress</div>
+        <div class="sidebar-link" onclick="switchDashTab('recent')"><i class="fas fa-history"></i> Recent</div>
+        <div class="sidebar-link" onclick="navigate('home')"><i class="fas fa-book-open"></i> Browse Courses</div>
+      </nav>
+    </div>
+    <div class="dash-main" id="dashMain"></div>
+  </div>
+</div>
+
+<!-- =================== NOTIFICATIONS PAGE =================== -->
+<div class="page" id="page-notifications">
+  <div style="max-width:700px;margin:0 auto;padding:40px 24px">
+    <h2 style="font-family:'Poppins',sans-serif;font-weight:700;margin-bottom:24px">Notifications</h2>
+    <div id="notifList" style="display:flex;flex-direction:column;gap:12px"></div>
+  </div>
+</div>
+
+<!-- =================== ABOUT PAGE =================== -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="section-eyebrow">About Us</div>
+    <h2 style="font-family:'Poppins',sans-serif;font-weight:800;font-size:2.5rem;margin:10px 0">Building the Future of <span style="color:var(--cyan)">Student Learning</span></h2>
+    <p style="color:var(--text2);max-width:600px;margin:0 auto;line-height:1.7">EduHub was built by students, for students. We believe quality education should be free and accessible to everyone, in every language, on every device.</p>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Our Mission</div>
+      <h2 class="section-title">Why We Built EduHub</h2>
+    </div>
+    <div class="features-grid" style="margin-bottom:60px">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(79,70,229,0.15);color:var(--indigo2)"><i class="fas fa-heart"></i></div>
+        <h4>Free Forever</h4>
+        <p>Every resource on EduHub is completely free. No subscriptions, no paywalls, no hidden fees.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(16,185,129,0.15);color:var(--green)"><i class="fas fa-users"></i></div>
+        <h4>Community Driven</h4>
+        <p>Notes and resources contributed by toppers and experienced students from across India.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(6,182,212,0.15);color:var(--cyan)"><i class="fas fa-shield-alt"></i></div>
+        <h4>Quality Assured</h4>
+        <p>Every resource is reviewed by subject experts before being published on the platform.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(245,158,11,0.15);color:var(--amber)"><i class="fas fa-sync-alt"></i></div>
+        <h4>Always Updated</h4>
+        <p>Content is continuously updated to match the latest university syllabus and exam patterns.</p>
+      </div>
+    </div>
+    <div class="section-header">
+      <div class="section-eyebrow">Meet the Team</div>
+      <h2 class="section-title">Built with ❤️</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar" style="background:rgba(79,70,229,0.2)">👨‍💻</div><h4>Arjun Sharma</h4><p>Founder & Developer</p></div>
+      <div class="team-card"><div class="team-avatar" style="background:rgba(6,182,212,0.2)">👩‍🎓</div><h4>Priya Verma</h4><p>Content Lead</p></div>
+      <div class="team-card"><div class="team-avatar" style="background:rgba(16,185,129,0.2)">👨‍🏫</div><h4>Rahul Gupta</h4><p>Subject Expert</p></div>
+      <div class="team-card"><div class="team-avatar" style="background:rgba(245,158,11,0.2)">👩‍💻</div><h4>Sneha Patel</h4><p>UX Designer</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== CONTACT PAGE =================== -->
+<div class="page" id="page-contact">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Get in Touch</div>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-sub">Have questions, suggestions, or want to contribute? We'd love to hear from you.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-form">
+        <div class="form-group"><label>Your Name</label><input type="text" placeholder="Arjun Sharma"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="arjun@example.com"/></div>
+        <div class="form-group"><label>Subject</label><input type="text" placeholder="How can we help?"/></div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Write your message here…"></textarea></div>
+        <button class="btn-primary" style="padding:12px 28px;border-radius:var(--radius-sm);font-size:0.9rem" onclick="showToast('Message sent! We\'ll reply within 24 hours.','success')"><i class="fas fa-paper-plane"></i> &nbsp;Send Message</button>
+      </div>
+      <div>
+        <div class="contact-info-item"><div class="contact-info-icon"><i class="fas fa-envelope"></i></div><div class="contact-info-text"><strong>Email</strong><span>support@eduhub.in</span></div></div>
+        <div class="contact-info-item"><div class="contact-info-icon"><i class="fas fa-phone"></i></div><div class="contact-info-text"><strong>Phone</strong><span>+91 98765 43210</span></div></div>
+        <div class="contact-info-item"><div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-info-text"><strong>Location</strong><span>New Delhi, India</span></div></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:20px">
+          <h5 style="font-weight:600;margin-bottom:12px">Follow Us</h5>
+          <div style="display:flex;gap:10px">
+            <div class="social-btn" onclick="showToast('Follow us on YouTube!','info')"><i class="fab fa-youtube"></i></div>
+            <div class="social-btn" onclick="showToast('Follow us on Telegram!','info')"><i class="fab fa-telegram"></i></div>
+            <div class="social-btn" onclick="showToast('Follow us on Instagram!','info')"><i class="fab fa-instagram"></i></div>
+            <div class="social-btn" onclick="showToast('Follow us on Twitter!','info')"><i class="fab fa-twitter"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== FAQ PAGE =================== -->
+<div class="page" id="page-faq">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-sub">Everything you need to know about EduHub.</p>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</div>
+
+<!-- =================== PRIVACY PAGE =================== -->
+<div class="page" id="page-privacy">
+  <div style="max-width:800px;margin:0 auto;padding:60px 24px">
+    <h2 style="font-family:'Poppins',sans-serif;font-weight:700;margin-bottom:8px">Privacy Policy</h2>
+    <p style="color:var(--text3);margin-bottom:32px;font-size:0.875rem">Last updated: June 2025</p>
+    <div style="display:flex;flex-direction:column;gap:24px;color:var(--text2);line-height:1.8;font-size:0.9rem">
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">1. Information We Collect</h4><p>We collect information you provide when registering, including your name and email address. We also collect usage data to improve our platform.</p></div>
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">2. How We Use Your Information</h4><p>Your information is used to provide personalized learning experiences, track your progress, and send relevant notifications about new content.</p></div>
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">3. Data Security</h4><p>We implement industry-standard security measures to protect your personal information. We never sell your data to third parties.</p></div>
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">4. Cookies</h4><p>We use cookies to improve your browsing experience and remember your preferences. You can disable cookies in your browser settings.</p></div>
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">5. Contact</h4><p>For privacy concerns, email us at privacy@eduhub.in</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== TERMS PAGE =================== -->
+<div class="page" id="page-terms">
+  <div style="max-width:800px;margin:0 auto;padding:60px 24px">
+    <h2 style="font-family:'Poppins',sans-serif;font-weight:700;margin-bottom:8px">Terms & Conditions</h2>
+    <p style="color:var(--text3);margin-bottom:32px;font-size:0.875rem">Last updated: June 2025</p>
+    <div style="display:flex;flex-direction:column;gap:24px;color:var(--text2);line-height:1.8;font-size:0.9rem">
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">1. Acceptance of Terms</h4><p>By using EduHub, you agree to these terms. If you disagree, please do not use our platform.</p></div>
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">2. Use of Content</h4><p>All content on EduHub is for personal educational use only. Redistribution or commercial use without permission is prohibited.</p></div>
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">3. User Accounts</h4><p>You are responsible for maintaining the confidentiality of your account and for all activities under your account.</p></div>
+      <div><h4 style="color:var(--text);font-weight:600;margin-bottom:8px">4. Disclaimer</h4><p>EduHub provides resources for educational purposes. We do not guarantee exam success or official certification.</p></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #app -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:12px;cursor:pointer" onclick="navigate('home')">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="logo-text">Edu<span>Hub</span></div>
+      </div>
+      <p>India's most complete free study platform for BCA and B.Sc students. Notes, videos, previous papers — all in one place.</p>
+      <div class="footer-socials">
+        <div class="social-btn"><i class="fab fa-youtube"></i></div>
+        <div class="social-btn"><i class="fab fa-telegram"></i></div>
+        <div class="social-btn"><i class="fab fa-instagram"></i></div>
+        <div class="social-btn"><i class="fab fa-twitter"></i></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Courses</h5>
+      <div class="footer-links">
+        <div class="footer-link" onclick="navigate('degree','BCA')">BCA Complete</div>
+        <div class="footer-link" onclick="navigate('degree','BSc')">B.Sc Complete</div>
+        <div class="footer-link" onclick="navigate('home')">All Subjects</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Resources</h5>
+      <div class="footer-links">
+        <div class="footer-link" onclick="showToast('Notes section coming!','info')">Study Notes</div>
+        <div class="footer-link" onclick="showToast('Videos section!','info')">Video Lectures</div>
+        <div class="footer-link" onclick="showToast('Papers section!','info')">Previous Papers</div>
+        <div class="footer-link" onclick="showToast('Lab notes!','info')">Lab Practicals</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <div class="footer-links">
+        <div class="footer-link" onclick="navigate('about')">About Us</div>
+        <div class="footer-link" onclick="navigate('contact')">Contact</div>
+        <div class="footer-link" onclick="navigate('faq')">FAQ</div>
+        <div class="footer-link" onclick="navigate('privacy')">Privacy Policy</div>
+        <div class="footer-link" onclick="navigate('terms')">Terms & Conditions</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 EduHub. Built with ❤️ for Indian students.</span>
+    <span>Free forever · No ads · Open learning</span>
+  </div>
+</footer>
+
+<!-- Video Modal -->
+<div class="video-embed-modal" id="videoModal" onclick="closeVideoModal(event)">
+  <div class="video-embed-wrap">
+    <button class="modal-close" onclick="closeVideoModal()"><i class="fas fa-times"></i></button>
+    <iframe id="videoFrame" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+  </div>
+</div>
+
+<!-- Auth Modal -->
+<div class="auth-modal" id="authModal" onclick="closeAuthModal(event)">
+  <div class="auth-box">
+    <button class="modal-close-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
+    <h2 id="authTitle">Welcome Back</h2>
+    <p id="authSub">Sign in to save your progress and bookmarks.</p>
+    <div id="authForm">
+      <div class="form-group" id="authNameGroup" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="Your name"/></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="authEmail" placeholder="you@example.com"/></div>
+      <div class="form-group"><label>Password</label><input type="password" id="authPassword" placeholder="••••••••"/></div>
+      <button class="btn-primary" style="width:100%;padding:12px;border-radius:var(--radius-sm);font-size:0.95rem;margin-top:8px" onclick="handleAuth()" id="authSubmitBtn">Sign In</button>
+    </div>
+    <div class="auth-switch" id="authSwitch">Don't have an account? <span onclick="switchAuth()">Sign up free</span></div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+// ===== DATA =====
+const DATA = {
+  BCA: {
+    name: 'BCA', full: 'Bachelor of Computer Applications',
+    color: 'linear-gradient(135deg,#4F46E5,#06B6D4)',
+    years: [
+      { year:1, label:'First Year', sems:[1,2],
+        subjects:[
+          {id:'bca-c-prog', name:'C Programming', sem:1, icon:'💻', color:'rgba(79,70,229,0.2)', iconColor:'var(--indigo2)', desc:'Fundamentals of C language, pointers, arrays, and file handling.', tags:['Programming','Core']},
+          {id:'bca-math1', name:'Mathematics-I', sem:1, icon:'📐', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'Calculus, matrices, limits, differential equations.', tags:['Maths','Core']},
+          {id:'bca-it-fund', name:'IT Fundamentals', sem:1, icon:'🖥️', color:'rgba(16,185,129,0.2)', iconColor:'var(--green)', desc:'Introduction to computers, hardware, software, OS basics.', tags:['IT','Core']},
+          {id:'bca-comm', name:'Communication Skills', sem:1, icon:'💬', color:'rgba(245,158,11,0.2)', iconColor:'var(--amber)', desc:'Business communication, technical writing, presentations.', tags:['Soft Skills']},
+          {id:'bca-ds', name:'Data Structures', sem:2, icon:'🌲', color:'rgba(139,92,246,0.2)', iconColor:'var(--purple)', desc:'Arrays, linked lists, stacks, queues, trees, graphs, sorting algorithms.', tags:['CS','Core']},
+          {id:'bca-dbms', name:'DBMS', sem:2, icon:'🗄️', color:'rgba(244,63,94,0.2)', iconColor:'var(--rose)', desc:'Relational model, SQL, normalization, ER diagrams, transactions.', tags:['Database','Core']},
+          {id:'bca-math2', name:'Mathematics-II', sem:2, icon:'📊', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'Statistics, probability, numerical methods.', tags:['Maths','Core']},
+          {id:'bca-dig-elec', name:'Digital Electronics', sem:2, icon:'⚡', color:'rgba(245,158,11,0.2)', iconColor:'var(--amber)', desc:'Logic gates, Boolean algebra, flip-flops, counters.', tags:['Electronics','Core']},
+        ]
+      },
+      { year:2, label:'Second Year', sems:[3,4],
+        subjects:[
+          {id:'bca-oops', name:'OOP with C++', sem:3, icon:'🔷', color:'rgba(79,70,229,0.2)', iconColor:'var(--indigo2)', desc:'Object-oriented concepts, classes, inheritance, polymorphism, templates.', tags:['Programming','OOP']},
+          {id:'bca-os', name:'Operating System', sem:3, icon:'⚙️', color:'rgba(16,185,129,0.2)', iconColor:'var(--green)', desc:'Process management, memory management, file systems, deadlock.', tags:['OS','Core']},
+          {id:'bca-cn', name:'Computer Networks', sem:3, icon:'🌐', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'OSI model, TCP/IP, routing, network security, protocols.', tags:['Networking','Core']},
+          {id:'bca-se', name:'Software Engineering', sem:4, icon:'🔧', color:'rgba(139,92,246,0.2)', iconColor:'var(--purple)', desc:'SDLC, Agile, UML diagrams, testing, project management.', tags:['SE','Core']},
+          {id:'bca-java', name:'Java Programming', sem:4, icon:'☕', color:'rgba(244,63,94,0.2)', iconColor:'var(--rose)', desc:'Core Java, collections, exception handling, JDBC, swing.', tags:['Programming','Java']},
+          {id:'bca-web', name:'Web Technology', sem:4, icon:'🌍', color:'rgba(245,158,11,0.2)', iconColor:'var(--amber)', desc:'HTML, CSS, JavaScript, PHP, MySQL integration.', tags:['Web','Development']},
+        ]
+      },
+      { year:3, label:'Third Year', sems:[5,6],
+        subjects:[
+          {id:'bca-python', name:'Python Programming', sem:5, icon:'🐍', color:'rgba(16,185,129,0.2)', iconColor:'var(--green)', desc:'Python basics, OOP, data science libraries, Django framework.', tags:['Programming','Python']},
+          {id:'bca-ai', name:'AI & Machine Learning', sem:5, icon:'🤖', color:'rgba(79,70,229,0.2)', iconColor:'var(--indigo2)', desc:'ML algorithms, neural networks, supervised/unsupervised learning.', tags:['AI','ML']},
+          {id:'bca-cloud', name:'Cloud Computing', sem:5, icon:'☁️', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'AWS, Azure, GCP, virtualization, containers, microservices.', tags:['Cloud','DevOps']},
+          {id:'bca-sec', name:'Cyber Security', sem:6, icon:'🔒', color:'rgba(244,63,94,0.2)', iconColor:'var(--rose)', desc:'Ethical hacking, cryptography, network security, OWASP.', tags:['Security','Core']},
+          {id:'bca-project', name:'Project Work', sem:6, icon:'🎓', color:'rgba(245,158,11,0.2)', iconColor:'var(--amber)', desc:'Capstone project, documentation, presentation, viva voce.', tags:['Project']},
+          {id:'bca-mob', name:'Mobile App Development', sem:6, icon:'📱', color:'rgba(139,92,246,0.2)', iconColor:'var(--purple)', desc:'Android development, React Native, Flutter basics.', tags:['Mobile','Dev']},
+        ]
+      }
+    ]
+  },
+  BSc: {
+    name: 'B.Sc', full: 'Bachelor of Science',
+    color: 'linear-gradient(135deg,#06B6D4,#10B981)',
+    years: [
+      { year:1, label:'First Year', sems:[1,2],
+        subjects:[
+          {id:'bsc-phy1', name:'Physics-I', sem:1, icon:'⚛️', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'Mechanics, waves, optics, electromagnetic theory.', tags:['Physics','Core']},
+          {id:'bsc-chem1', name:'Chemistry-I', sem:1, icon:'🧪', color:'rgba(16,185,129,0.2)', iconColor:'var(--green)', desc:'Organic, inorganic, physical chemistry fundamentals.', tags:['Chemistry','Core']},
+          {id:'bsc-math1', name:'Mathematics-I', sem:1, icon:'📐', color:'rgba(79,70,229,0.2)', iconColor:'var(--indigo2)', desc:'Calculus, differential equations, coordinate geometry.', tags:['Maths','Core']},
+          {id:'bsc-env', name:'Environmental Science', sem:1, icon:'🌿', color:'rgba(16,185,129,0.2)', iconColor:'var(--green)', desc:'Ecosystems, biodiversity, pollution, sustainability.', tags:['EVS']},
+          {id:'bsc-phy2', name:'Physics-II', sem:2, icon:'🔭', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'Thermodynamics, modern physics, quantum mechanics basics.', tags:['Physics','Core']},
+          {id:'bsc-chem2', name:'Chemistry-II', sem:2, icon:'⚗️', color:'rgba(139,92,246,0.2)', iconColor:'var(--purple)', desc:'Spectroscopy, electrochemistry, coordination chemistry.', tags:['Chemistry','Core']},
+          {id:'bsc-bio1', name:'Biology', sem:2, icon:'🧬', color:'rgba(244,63,94,0.2)', iconColor:'var(--rose)', desc:'Cell biology, genetics, ecology, biochemistry.', tags:['Biology','Core']},
+          {id:'bsc-cs1', name:'Computer Science-I', sem:2, icon:'💻', color:'rgba(245,158,11,0.2)', iconColor:'var(--amber)', desc:'Programming fundamentals, C language, algorithms.', tags:['CS','Programming']},
+        ]
+      },
+      { year:2, label:'Second Year', sems:[3,4],
+        subjects:[
+          {id:'bsc-phy3', name:'Physics-III', sem:3, icon:'⚡', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'Electrodynamics, solid state physics, nuclear physics.', tags:['Physics','Core']},
+          {id:'bsc-chem3', name:'Chemistry-III', sem:3, icon:'🧫', color:'rgba(16,185,129,0.2)', iconColor:'var(--green)', desc:'Polymer chemistry, natural products, biochemistry.', tags:['Chemistry','Core']},
+          {id:'bsc-math2', name:'Mathematics-II', sem:3, icon:'📊', color:'rgba(79,70,229,0.2)', iconColor:'var(--indigo2)', desc:'Linear algebra, abstract algebra, analysis.', tags:['Maths','Core']},
+          {id:'bsc-stat', name:'Statistics', sem:4, icon:'📈', color:'rgba(245,158,11,0.2)', iconColor:'var(--amber)', desc:'Probability, distributions, hypothesis testing, regression.', tags:['Statistics']},
+          {id:'bsc-cs2', name:'Computer Science-II', sem:4, icon:'🖥️', color:'rgba(244,63,94,0.2)', iconColor:'var(--rose)', desc:'Data structures, DBMS, operating systems.', tags:['CS','Core']},
+          {id:'bsc-micro', name:'Microbiology', sem:4, icon:'🔬', color:'rgba(139,92,246,0.2)', iconColor:'var(--purple)', desc:'Bacteria, viruses, fungi, immunology, biotechnology.', tags:['Biology','Lab']},
+        ]
+      },
+      { year:3, label:'Third Year', sems:[5,6],
+        subjects:[
+          {id:'bsc-phy4', name:'Advanced Physics', sem:5, icon:'🌌', color:'rgba(6,182,212,0.2)', iconColor:'var(--cyan)', desc:'Astrophysics, particle physics, quantum field theory.', tags:['Physics','Advanced']},
+          {id:'bsc-chem4', name:'Advanced Chemistry', sem:5, icon:'🧪', color:'rgba(16,185,129,0.2)', iconColor:'var(--green)', desc:'Industrial chemistry, green chemistry, nanotechnology.', tags:['Chemistry','Advanced']},
+          {id:'bsc-math3', name:'Mathematics-III', sem:5, icon:'🔢', color:'rgba(79,70,229,0.2)', iconColor:'var(--indigo2)', desc:'Complex analysis, functional analysis, topology.', tags:['Maths','Advanced']},
+          {id:'bsc-biotech', name:'Biotechnology', sem:6, icon:'🧬', color:'rgba(244,63,94,0.2)', iconColor:'var(--rose)', desc:'Genetic engineering, bioinformatics, cell culture.', tags:['Biotech','Lab']},
+          {id:'bsc-cs3', name:'Computer Science-III', sem:6, icon:'🤖', color:'rgba(245,158,11,0.2)', iconColor:'var(--amber)', desc:'AI, machine learning, web technologies, projects.', tags:['CS','Advanced']},
+          {id:'bsc-project', name:'Research Project', sem:6, icon:'🎓', color:'rgba(139,92,246,0.2)', iconColor:'var(--purple)', desc:'Final year research project, dissertation, viva.', tags:['Project']},
+        ]
+      }
+    ]
+  }
+};
+
+const RESOURCES = {
+  notes: [
+    {title:'Complete Unit-wise Notes', desc:'Comprehensive notes covering all units with examples and diagrams. Prepared by university toppers.', type:'PDF', lang:'EN', pages:85},
+    {title:'Short Revision Notes', desc:'Quick revision notes with key points and formulas. Perfect for last-minute exam prep.', type:'PDF', lang:'EN', pages:24},
+    {title:'पूर्ण यूनिट-वार नोट्स (Hindi)', desc:'हिंदी में सम्पूर्ण नोट्स – सभी यूनिट, उदाहरण और चित्रों सहित।', type:'PDF', lang:'HI', pages:90},
+    {title:'Important Questions Bank', desc:'Top 50 important questions with detailed answers for upcoming exams.', type:'PDF', lang:'EN', pages:40},
+    {title:'Previous Year Papers (5 Years)', desc:'Last 5 years question papers with model answers and marking scheme.', type:'PDF', lang:'EN', pages:120},
+    {title:'Chapter-wise Notes', desc:'Detailed notes for each chapter, with solved examples and practice problems.', type:'PDF', lang:'EN', pages:68},
+  ],
+  practical: [
+    {title:'Lab Manual – Complete', desc:'All practical experiments with procedure, observations, result, and precautions.', type:'PDF', lang:'EN', pages:55},
+    {title:'Practical File Template', desc:'Ready-made practical file template with proper formatting for university submission.', type:'PDF', lang:'EN', pages:20},
+    {title:'Lab Viva Questions', desc:'Top 100 expected viva questions with answers for practical examination.', type:'PDF', lang:'EN', pages:30},
+  ],
+  assignments: [
+    {title:'Unit 1 – Assignment', desc:'Solved assignment for Unit 1 with all required questions.', type:'PDF', lang:'EN', pages:12},
+    {title:'Unit 2 – Assignment', desc:'Solved assignment for Unit 2, complete with references.', type:'PDF', lang:'EN', pages:14},
+    {title:'Mid-term Assignment', desc:'Mid-semester assignment paper with model solutions.', type:'PDF', lang:'EN', pages:18},
+  ],
+  videos: [
+    {title:'Complete Subject Playlist', channel:'EduHub Official', views:'45K', duration:'12 hrs', thumb:'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg', vid:'dQw4w9WgXcQ'},
+    {title:'Chapter 1 – Introduction & Basics', channel:'EduHub Official', views:'22K', duration:'45 min', thumb:'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg', vid:'dQw4w9WgXcQ'},
+    {title:'Chapter 2 – Core Concepts Explained', channel:'EduHub Official', views:'18K', duration:'55 min', thumb:'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg', vid:'dQw4w9WgXcQ'},
+    {title:'Important Topics for Exam', channel:'EduHub Official', views:'30K', duration:'1.5 hrs', thumb:'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg', vid:'dQw4w9WgXcQ'},
+    {title:'Solved Previous Year Paper', channel:'EduHub Official', views:'55K', duration:'2 hrs', thumb:'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg', vid:'dQw4w9WgXcQ'},
+    {title:'Revision – All Topics in 1 Hour', channel:'EduHub Official', views:'70K', duration:'60 min', thumb:'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg', vid:'dQw4w9WgXcQ'},
+  ],
+  formulas: [
+    {title:'Complete Formula Sheet', desc:'All important formulas, theorems, and identities in one place. Print-ready.', type:'PDF', lang:'EN', pages:8},
+    {title:'Quick Reference Card', desc:'Pocket-sized formula card with the most tested formulas.', type:'PDF', lang:'EN', pages:2},
+  ]
+};
+
+const FAQs = [
+  {q:'Is EduHub completely free?', a:'Yes! EduHub is 100% free. All notes, PDFs, videos, and resources are available without any subscription or payment. We believe quality education should be accessible to everyone.'},
+  {q:'Are the notes available in Hindi?', a:'Absolutely! We provide study materials in both English and Hindi. You can switch languages using the language toggle in the navigation bar.'},
+  {q:'How do I download PDFs?', a:'Click on any resource card and press the "Download" button. The PDF will be downloaded directly to your device. You can study offline anytime.'},
+  {q:'Are the notes updated with the latest syllabus?', a:'Yes, our team continuously updates content to match the latest university syllabi. If you notice anything outdated, use the contact form to let us know.'},
+  {q:'Can I bookmark or save resources?', a:'Yes! Create a free account to bookmark notes, save favourite subjects, track your progress, and continue from where you left off.'},
+  {q:'Are previous year papers available?', a:'Yes, we have 5 years of previous question papers for most subjects, complete with model answers and marking schemes.'},
+  {q:'Is there a mobile app?', a:'The website is fully responsive and works perfectly on mobile browsers. A dedicated Android app is under development and will be released soon.'},
+  {q:'How can I contribute notes or resources?', a:'We welcome contributions! Contact us through the contact form or email us at contribute@eduhub.in with your notes and we will review and publish them.'},
+];
+
+const NOTIFICATIONS = [
+  {icon:'fas fa-file-pdf', color:'var(--rose)', title:'New Notes Added', desc:'B.Sc Chemistry-III Unit 4 notes uploaded', time:'2 hours ago'},
+  {icon:'fab fa-youtube', color:'var(--rose)', title:'New Video Lecture', desc:'BCA Data Structures – Graphs playlist updated', time:'5 hours ago'},
+  {icon:'fas fa-trophy', color:'var(--amber)', title:'Achievement Unlocked', desc:'You completed 5 subjects this month!', time:'1 day ago'},
+  {icon:'fas fa-bell', color:'var(--indigo2)', title:'Exam Alert', desc:'University exams typically start in 3 weeks. Start your revision!', time:'2 days ago'},
+  {icon:'fas fa-star', color:'var(--cyan)', title:'Resource Verified', desc:'All BCA Year 2 notes have been quality-checked', time:'3 days ago'},
+];
+
+// ===== STATE =====
+let state = {
+  currentPage: 'home',
+  selectedDegree: null,
+  selectedYear: null,
+  selectedSubject: null,
+  currentLang: 'EN',
+  isDark: true,
+  isLoggedIn: false,
+  user: null,
+  bookmarks: new Set(),
+  authMode: 'login',
+  activeResourceTab: 'notes',
+  activeDashTab: 'overview',
+};
+
+// ===== NAVIGATION =====
+function navigate(page, param1, param2) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  state.currentPage = page;
+
+  if(page === 'home') {
+    document.getElementById('page-home').classList.add('active');
+    initHome();
+  } else if(page === 'degree') {
+    state.selectedDegree = param1;
+    document.getElementById('page-degree').classList.add('active');
+    renderDegree(param1);
+  } else if(page === 'subjects') {
+    state.selectedYear = param1;
+    document.getElementById('page-subjects').classList.add('active');
+    renderSubjects(state.selectedDegree, param1);
+  } else if(page === 'subject-detail') {
+    state.selectedSubject = param1;
+    document.getElementById('page-subject-detail').classList.add('active');
+    renderSubjectDetail(param1);
+  } else if(page === 'dashboard') {
+    document.getElementById('page-dashboard').classList.add('active');
+    renderDashboard();
+  } else if(page === 'notifications') {
+    document.getElementById('page-notifications').classList.add('active');
+    renderNotifications();
+  } else if(page === 'about') {
+    document.getElementById('page-about').classList.add('active');
+  } else if(page === 'contact') {
+    document.getElementById('page-contact').classList.add('active');
+  } else if(page === 'faq') {
+    document.getElementById('page-faq').classList.add('active');
+    renderFAQ();
+  } else if(page === 'privacy') {
+    document.getElementById('page-privacy').classList.add('active');
+  } else if(page === 'terms') {
+    document.getElementById('page-terms').classList.add('active');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(document.getElementById('mobileMenu').classList.contains('open')) toggleMobile();
+}
+
+function goBackToDegree() { navigate('degree', state.selectedDegree); }
+function goBackToSubjects() { navigate('subjects', state.selectedYear); }
+
+// ===== HOME =====
+function initHome() {
+  renderTrending();
+  renderRecent();
+}
+
+function renderTrending() {
+  const el = document.getElementById('trendingList');
+  const items = [
+    {n:'Data Structures', course:'BCA Sem 2', deg:'BCA', yr:1, id:'bca-ds'},
+    {n:'DBMS', course:'BCA Sem 2', deg:'BCA', yr:1, id:'bca-dbms'},
+    {n:'C Programming', course:'BCA Sem 1', deg:'BCA', yr:1, id:'bca-c-prog'},
+    {n:'Physics-I', course:'B.Sc Sem 1', deg:'BSc', yr:1, id:'bsc-phy1'},
+    {n:'Chemistry-I', course:'B.Sc Sem 1', deg:'BSc', yr:1, id:'bsc-chem1'},
+  ];
+  el.innerHTML = items.map((it,i)=>`
+    <div class="trending-item" onclick="navigate('subject-detail','${it.id}')">
+      <span class="trending-num${i<2?' hot':''}">${(i+1).toString().padStart(2,'0')}</span>
+      <div class="trending-info"><h5>${it.n}</h5><p>${it.course}</p></div>
+      <i class="fas fa-chevron-right trending-arrow"></i>
+    </div>`).join('');
+}
+
+function renderRecent() {
+  const el = document.getElementById('recentList');
+  const items = [
+    {name:'Python Notes', sub:'BCA Sem 5'},
+    {name:'Physics Lab Manual', sub:'B.Sc Sem 3'},
+    {name:'DBMS Question Bank', sub:'BCA Sem 2'},
+    {name:'Chemistry Formula Sheet', sub:'B.Sc Sem 1'},
+  ];
+  el.innerHTML = items.map(it=>`
+    <div class="recent-card">
+      <strong>${it.name}</strong>
+      <span>${it.sub}</span>
+    </div>`).join('');
+}
+
+// ===== DEGREE =====
+function renderDegree(deg) {
+  const d = DATA[deg];
+  document.getElementById('degreeBreadcrumb').textContent = d.name;
+  document.getElementById('degreeEyebrow').textContent = `Select Year – ${d.name}`;
+  document.getElementById('degreeTitle').textContent = `${d.name} – Choose Your Year`;
+  document.getElementById('degreeSub').textContent = `${d.full} — All 3 years, 6 semesters with complete resources.`;
+  const grid = document.getElementById('yearGrid');
+  grid.innerHTML = d.years.map(y=>`
+    <div class="year-card" onclick="navigate('subjects',${y.year})">
+      <span class="year-num">${y.year}</span>
+      <div class="year-label">${y.label}</div>
+      <div class="year-sub">Semester ${y.sems[0]} & ${y.sems[1]}</div>
+    </div>`).join('');
+}
+
+// ===== SUBJECTS =====
+function renderSubjects(deg, yearNum) {
+  const d = DATA[deg];
+  const yr = d.years.find(y=>y.year===yearNum);
+  document.getElementById('subjectEyebrow').textContent = `Year ${yearNum} – Semester ${yr.sems[0]} & ${yr.sems[1]}`;
+  document.getElementById('subjectTitle').textContent = `${d.name} ${yr.label} Subjects`;
+
+  document.getElementById('subjectBreadcrumb').innerHTML = `
+    <span class="breadcrumb-item" onclick="navigate('home')">Home</span>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-item" onclick="navigate('degree','${deg}')">${d.name}</span>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-item active">${yr.label}</span>`;
+
+  const filter = document.getElementById('semFilter');
+  filter.innerHTML = `
+    <button class="resource-tab active" onclick="filterSem(0,this)">All Subjects</button>
+    ${yr.sems.map(s=>`<button class="resource-tab" onclick="filterSem(${s},this)">Semester ${s}</button>`).join('')}`;
+
+  renderSubjectCards(yr.subjects);
+}
+
+function filterSem(sem, btn) {
+  document.querySelectorAll('#semFilter .resource-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const yr = DATA[state.selectedDegree].years.find(y=>y.year===state.selectedYear);
+  const subjects = sem === 0 ? yr.subjects : yr.subjects.filter(s=>s.sem===sem);
+  renderSubjectCards(subjects);
+}
+
+function renderSubjectCards(subjects) {
+  document.getElementById('subjectGrid').innerHTML = subjects.map(s=>`
+    <div class="subject-card" onclick="navigate('subject-detail','${s.id}')">
+      <div class="subject-card-top">
+        <div class="subject-icon-wrap" style="background:${s.color};color:${s.iconColor};font-size:1.4rem">${s.icon}</div>
+        <div style="flex:1"><h4>${s.name}</h4></div>
+      </div>
+      <p>${s.desc}</p>
+      <div class="degree-tags">${s.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="subject-card-footer">
+        <div class="resource-count"><i class="fas fa-file-alt"></i> 6+ Notes</div>
+        <div class="resource-count"><i class="fab fa-youtube"></i> Videos</div>
+        <span style="color:var(--cyan);font-size:0.78rem">View →</span>
+      </div>
+    </div>`).join('');
+}
+
+// ===== SUBJECT DETAIL =====
+function findSubject(id) {
+  for(const deg of Object.values(DATA)) {
+    for(const yr of deg.years) {
+      const s = yr.subjects.find(s=>s.id===id);
+      if(s) return {subject:s, degree:deg, year:yr};
+    }
+  }
+  return null;
+}
+
+function renderSubjectDetail(id) {
+  const found = findSubject(id);
+  if(!found) return;
+  const {subject:s, degree:d, year:yr} = found;
+
+  document.getElementById('detailBackBtn').onclick = ()=>navigate('subjects', yr.year);
+  document.getElementById('subjectHero').style.background = d.color;
+  document.getElementById('detailSubjectName').textContent = s.name;
+  document.getElementById('detailSubjectDesc').textContent = s.desc;
+  document.getElementById('detailBreadcrumb').innerHTML = `
+    <span style="cursor:pointer;opacity:0.75" onclick="navigate('home')">Home</span> /
+    <span style="cursor:pointer;opacity:0.75;margin:0 4px" onclick="navigate('degree','${d.name}')">${d.name}</span> /
+    <span style="cursor:pointer;opacity:0.75;margin:0 4px" onclick="navigate('subjects',${yr.year})">${yr.label}</span> /
+    <span style="font-weight:700">${s.name}</span>`;
+  document.getElementById('detailTags').innerHTML = s.tags.map(t=>`<span class="tag" style="background:rgba(255,255,255,0.2);color:#fff;border-color:rgba(255,255,255,0.3)">${t}</span>`).join('');
+
+  const tabs = [
+    {id:'notes', label:'📄 Notes & PDFs'},
+    {id:'practical', label:'🔬 Practical / Lab'},
+    {id:'assignments', label:'📝 Assignments'},
+    {id:'videos', label:'▶ Video Lectures'},
+    {id:'formulas', label:'🔢 Formulas'},
+  ];
+  state.activeResourceTab = 'notes';
+  document.getElementById('resourceTabs').innerHTML = tabs.map(t=>`
+    <button class="resource-tab${t.id==='notes'?' active':''}" onclick="switchResourceTab('${t.id}',this)">${t.label}</button>`).join('');
+  renderResourceContent('notes', s);
+}
+
+function switchResourceTab(tab, btn) {
+  state.activeResourceTab = tab;
+  document.querySelectorAll('#resourceTabs .resource-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const found = findSubject(state.selectedSubject);
+  renderResourceContent(tab, found ? found.subject : null);
+}
+
+function renderResourceContent(tab, subject) {
+  const el = document.getElementById('resourceContent');
+
+  if(tab === 'videos') {
+    el.innerHTML = `<div class="section-eyebrow" style="margin-bottom:20px">🎬 Video Lectures – ${subject ? subject.name : ''}</div><div class="video-grid">${RESOURCES.videos.map(v=>`
+      <div class="video-card" onclick="openVideo('${v.vid}')">
+        <div class="video-thumb"><img src="${v.thumb}" alt="${v.title}" class="video-thumb-img" loading="lazy"/><div class="play-overlay"><div class="play-btn"><i class="fas fa-play"></i></div></div></div>
+        <div class="video-info">
+          <h5>${v.title}</h5>
+          <p>${v.channel}</p>
+          <div class="video-meta"><span><i class="fas fa-eye"></i> ${v.views} views</span><span><i class="fas fa-clock"></i> ${v.duration}</span></div>
+        </div>
+      </div>`).join('')}</div>`;
+    return;
+  }
+
+  const resources = RESOURCES[tab] || [];
+  const typeColors = {PDF:'rgba(244,63,94,0.15)', DOC:'rgba(79,70,229,0.15)'};
+  const typeIconColors = {PDF:'var(--rose)', DOC:'var(--indigo2)'};
+
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <div class="section-eyebrow">📚 ${tab.charAt(0).toUpperCase()+tab.slice(1)} Resources – ${subject ? subject.name : ''}</div>
+      <div style="display:flex;gap:8px">
+        <button class="lang-badge${state.currentLang==='EN'?' active':''}" onclick="state.currentLang='EN';switchResourceTab(state.activeResourceTab,document.querySelector('#resourceTabs .resource-tab.active'))">EN</button>
+        <button class="lang-badge${state.currentLang==='HI'?' active':''}" onclick="state.currentLang='HI';switchResourceTab(state.activeResourceTab,document.querySelector('#resourceTabs .resource-tab.active'))">HI</button>
+      </div>
+    </div>
+    <div class="resource-grid">
+      ${resources.map((r,i)=>`
+        <div class="resource-card">
+          <div class="resource-card-header">
+            <div class="resource-type-icon" style="background:${typeColors[r.type]||'rgba(79,70,229,0.15)'};color:${typeIconColors[r.type]||'var(--indigo2)'}">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <h5>${r.title}</h5>
+          </div>
+          <p>${r.desc}</p>
+          <div style="display:flex;align-items:center;gap:8px;font-size:0.75rem;color:var(--text3)">
+            <span><i class="fas fa-file"></i> ${r.pages} pages</span>
+            <span class="tag${r.lang==='HI'?' cyan':''}">${r.lang==='HI'?'हिंदी':'English'}</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="resource-actions">
+              <button class="btn-sm btn-download" onclick="downloadResource('${r.title}')"><i class="fas fa-download"></i> Download</button>
+              <button class="btn-sm btn-preview" onclick="showToast('Preview coming soon!','info')"><i class="fas fa-eye"></i> Preview</button>
+            </div>
+            <button class="btn-bookmark${state.bookmarks.has(r.title)?' active':''}" onclick="toggleBookmark('${r.title}',this)">
+              <i class="fas fa-bookmark"></i>
+            </button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  if(!state.isLoggedIn) {
+    document.getElementById('dashUserName').textContent = 'Guest User';
+    document.getElementById('dashUserEmail').textContent = 'Sign in to save progress';
+  }
+  renderDashContent(state.activeDashTab);
+}
+
+function switchDashTab(tab) {
+  state.activeDashTab = tab;
+  event && event.target.classList && document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));
+  renderDashContent(tab);
+}
+
+function renderDashContent(tab) {
+  const el = document.getElementById('dashMain');
+  if(tab === 'overview') {
+    el.innerHTML = `
+      <div class="dash-section">
+        <div class="dash-section-title"><i class="fas fa-chart-line" style="color:var(--cyan)"></i> Learning Progress</div>
+        ${[{name:'Data Structures',p:72},{name:'DBMS',p:45},{name:'C Programming',p:90},{name:'Physics-I',p:30}].map(s=>`
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label"><span>${s.name}</span><span>${s.p}%</span></div>
+            <div class="progress-bar"><div class="progress-bar-fill" style="width:${s.p}%"></div></div>
+          </div>`).join('')}
+      </div>
+      <div class="dash-section">
+        <div class="dash-section-title"><i class="fas fa-history" style="color:var(--amber)"></i> Continue Learning</div>
+        <div class="recent-grid">
+          ${[{n:'Data Structures',s:'BCA Sem 2',t:'Trees & Graphs'},{n:'Physics-I',s:'B.Sc Sem 1',t:'Wave Optics'},{n:'DBMS',s:'BCA Sem 2',t:'Normalization'},{n:'Chemistry-I',s:'B.Sc Sem 1',t:'Organic Reactions'}].map(r=>`
+            <div class="recent-card">
+              <strong>${r.n}</strong>
+              <span style="display:block;margin-bottom:4px">${r.s}</span>
+              <span style="color:var(--cyan);font-size:0.75rem">Last: ${r.t}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="dash-section">
+        <div class="dash-section-title"><i class="fas fa-fire" style="color:var(--rose)"></i> Quick Stats</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
+          ${[{n:'12',l:'Subjects Explored',i:'fa-book'},{n:'47',l:'Resources Viewed',i:'fa-file-alt'},{n:'8',l:'Videos Watched',i:'fa-play'},{n:'5',l:'Bookmarks',i:'fa-bookmark'}].map(s=>`
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center">
+              <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.8rem;color:var(--cyan)">${s.n}</div>
+              <div style="color:var(--text2);font-size:0.78rem">${s.l}</div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  } else if(tab === 'bookmarks') {
+    const bm = [...state.bookmarks];
+    el.innerHTML = bm.length ? `
+      <div class="dash-section">
+        <div class="dash-section-title"><i class="fas fa-bookmark" style="color:var(--amber)"></i> Saved Resources</div>
+        <div class="resource-grid">${bm.map(b=>`
+          <div class="resource-card"><div class="resource-card-header"><div class="resource-type-icon" style="background:rgba(244,63,94,0.15);color:var(--rose)"><i class="fas fa-file-pdf"></i></div><h5>${b}</h5></div><div class="resource-actions"><button class="btn-sm btn-download" onclick="downloadResource('${b}')"><i class="fas fa-download"></i> Download</button></div></div>`).join('')}</div>
+      </div>` : `<div class="empty-state"><i class="fas fa-bookmark"></i><h3>No Bookmarks Yet</h3><p>Browse subjects and bookmark resources to save them here.</p><button class="btn-primary" style="margin-top:16px;padding:10px 24px;border-radius:50px" onclick="navigate('home')">Browse Subjects</button></div>`;
+  } else if(tab === 'progress') {
+    el.innerHTML = `
+      <div class="dash-section">
+        <div class="dash-section-title"><i class="fas fa-chart-bar" style="color:var(--indigo2)"></i> Subject Completion</div>
+        ${[{n:'BCA First Year',p:65},{n:'Data Structures',p:72},{n:'DBMS',p:45},{n:'C Programming',p:90},{n:'Mathematics-I',p:58},{n:'IT Fundamentals',p:80}].map(s=>`
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label"><span>${s.n}</span><span>${s.p}%</span></div>
+            <div class="progress-bar"><div class="progress-bar-fill" style="width:${s.p}%"></div></div>
+          </div>`).join('')}
+      </div>`;
+  } else if(tab === 'recent') {
+    el.innerHTML = `
+      <div class="dash-section">
+        <div class="dash-section-title"><i class="fas fa-history" style="color:var(--cyan)"></i> Recently Viewed</div>
+        <div class="recent-grid">
+          ${[{n:'Data Structures Notes',t:'2 hrs ago'},{n:'DBMS PYQ Paper 2023',t:'5 hrs ago'},{n:'C Programming Lab Manual',t:'Yesterday'},{n:'Physics Formula Sheet',t:'2 days ago'},{n:'OOP with C++ Notes',t:'3 days ago'},{n:'Chemistry Important Q',t:'4 days ago'}].map(r=>`
+            <div class="recent-card">
+              <strong>${r.n}</strong>
+              <span style="color:var(--text3)">${r.t}</span>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+}
+
+// ===== NOTIFICATIONS =====
+function renderNotifications() {
+  document.getElementById('notifList').innerHTML = NOTIFICATIONS.map(n=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;display:flex;gap:14px;align-items:flex-start">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(79,70,229,0.15);display:flex;align-items:center;justify-content:center;color:${n.color};flex-shrink:0"><i class="${n.icon}"></i></div>
+      <div style="flex:1"><strong style="font-size:0.9rem">${n.title}</strong><p style="color:var(--text2);font-size:0.82rem;margin:2px 0">${n.desc}</p><span style="color:var(--text3);font-size:0.75rem">${n.time}</span></div>
+    </div>`).join('');
+}
+
+// ===== FAQ =====
+function renderFAQ() {
+  document.getElementById('faqList').innerHTML = FAQs.map((f,i)=>`
+    <div class="faq-item" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        ${f.q} <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-a">${f.a}</div>
+    </div>`).join('');
+}
+function toggleFAQ(i) {
+  document.getElementById(`faq-${i}`).classList.toggle('open');
+}
+
+// ===== SEARCH =====
+function handleSearch(val) {
+  const res = document.getElementById('searchResults');
+  if(!val.trim()) { res.classList.remove('show'); return; }
+  const query = val.toLowerCase();
+  const results = [];
+  for(const deg of Object.values(DATA)) {
+    for(const yr of deg.years) {
+      for(const s of yr.subjects) {
+        if(s.name.toLowerCase().includes(query) || s.tags.some(t=>t.toLowerCase().includes(query))) {
+          results.push({...s, degree:deg.name, year:yr.label});
+        }
+      }
+    }
+  }
+  if(!results.length) { res.innerHTML = '<div class="search-result-item"><i class="fas fa-search"></i> No results found</div>'; }
+  else {
+    res.innerHTML = results.slice(0,6).map(r=>`
+      <div class="search-result-item" onclick="navigate('subject-detail','${r.id}');document.getElementById('navSearch').value='';document.getElementById('searchResults').classList.remove('show')">
+        <span style="font-size:1.1rem">${r.icon}</span>
+        <div><div style="font-weight:600">${r.name}</div><div style="color:var(--text3);font-size:0.75rem">${r.degree} · ${r.year}</div></div>
+      </div>`).join('');
+  }
+  res.classList.add('show');
+}
+document.addEventListener('click', e=>{ if(!e.target.closest('.nav-search')) document.getElementById('searchResults').classList.remove('show'); });
+
+// ===== THEME =====
+function toggleTheme() {
+  state.isDark = !state.isDark;
+  document.documentElement.setAttribute('data-theme', state.isDark ? 'dark' : 'light');
+  document.getElementById('themeIcon').className = state.isDark ? 'fas fa-moon' : 'fas fa-sun';
+  showToast(state.isDark ? 'Dark mode enabled' : 'Light mode enabled', 'info');
+}
+
+// ===== LANGUAGE =====
+function toggleLang() {
+  state.currentLang = state.currentLang === 'EN' ? 'HI' : 'EN';
+  document.getElementById('langLabel').textContent = state.currentLang;
+  showToast(state.currentLang === 'HI' ? 'Hindi medium resources loaded!' : 'English resources loaded!', 'success');
+}
+
+// ===== MOBILE MENU =====
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+
+// ===== AUTH =====
+function openAuth(mode) {
+  if(state.isLoggedIn) { navigate('dashboard'); return; }
+  state.authMode = mode;
+  document.getElementById('authModal').classList.add('open');
+  updateAuthForm();
+}
+function closeAuthModal(e) {
+  if(!e || e.target === document.getElementById('authModal')) document.getElementById('authModal').classList.remove('open');
+}
+function updateAuthForm() {
+  const isLogin = state.authMode === 'login';
+  document.getElementById('authTitle').textContent = isLogin ? 'Welcome Back' : 'Join EduHub Free';
+  document.getElementById('authSub').textContent = isLogin ? 'Sign in to save your progress and bookmarks.' : 'Create your free account and start learning.';
+  document.getElementById('authNameGroup').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('authSubmitBtn').textContent = isLogin ? 'Sign In' : 'Create Account';
+  document.getElementById('authSwitch').innerHTML = isLogin ? `Don't have an account? <span onclick="switchAuth()">Sign up free</span>` : `Already have an account? <span onclick="switchAuth()">Sign in</span>`;
+}
+function switchAuth() { state.authMode = state.authMode === 'login' ? 'register' : 'login'; updateAuthForm(); }
+function handleAuth() {
+  const email = document.getElementById('authEmail').value;
+  const pass = document.getElementById('authPassword').value;
+  if(!email || !pass) { showToast('Please fill in all fields.', 'error'); return; }
+  state.isLoggedIn = true;
+  state.user = {name: state.authMode === 'register' ? document.getElementById('authName').value || 'Student' : 'Student', email};
+  document.getElementById('authModal').classList.remove('open');
+  document.getElementById('authBtn').textContent = state.user.name.split(' ')[0];
+  showToast(state.authMode === 'login' ? `Welcome back, ${state.user.name}!` : `Account created! Welcome, ${state.user.name}!`, 'success');
+}
+
+// ===== BOOKMARKS =====
+function toggleBookmark(title, btn) {
+  if(state.bookmarks.has(title)) { state.bookmarks.delete(title); btn.classList.remove('active'); showToast('Bookmark removed', 'info'); }
+  else { state.bookmarks.add(title); btn.classList.add('active'); showToast('Bookmarked! View in Dashboard.', 'success'); }
+}
+
+// ===== DOWNLOAD =====
+function downloadResource(title) {
+  showToast(`Downloading: ${title}…`, 'success');
+  setTimeout(()=>showToast('Download complete!', 'success'), 1500);
+}
+
+// ===== VIDEO =====
+function openVideo(vid) {
+  document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${vid}?autoplay=1`;
+  document.getElementById('videoModal').classList.add('open');
+}
+function closeVideoModal(e) {
+  if(!e || e.target === document.getElementById('videoModal')) {
+    document.getElementById('videoFrame').src = '';
+    document.getElementById('videoModal').classList.remove('open');
+  }
+}
+
+// ===== TOAST =====
+function showToast(msg, type='info') {
+  const wrap = document.getElementById('toastWrap');
+  const icons = {success:'fa-check-circle', error:'fa-exclamation-circle', info:'fa-info-circle'};
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fas ${icons[type]}"></i>${msg}`;
+  wrap.appendChild(t);
+  setTimeout(()=>t.remove(), 3200);
+}
+
+// ===== INIT =====
+navigate('home');
+</script>
+</body>
+</html>
